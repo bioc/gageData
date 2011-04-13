@@ -65,20 +65,22 @@ fac[hn]='hn'
 fac[sh]='sh'
 fac[adh]='adh'
 fac[dcis]='dcis'
-if(require(genefilter)){
-fstats=rowFtests(gse16873.full[, -sh],
-as.factor(fac[-sh]))[,1,drop=FALSE]
-fstats=cbind(fstat=fstats)
+if (require(genefilter)){
+    fstats=rowFtests(gse16873.full[, -sh],
+    as.factor(fac[-sh]))[,1,drop=FALSE]
+    fstats=cbind(fstat=fstats)
 
-if(require(gage)){
-data(kegg.gs)
-lapply(kegg.gs[1:6],head)
-head(rownames(fstats))
-#feed fstats as single-column matrix into gage
-gse16873.fstats.kegg.p <- gage(fstats, gsets = kegg.gs,
-    ref = NULL, samp = NULL)
-head(gse16873.fstats.kegg.p$greater)
-}
+    \dontrun{
+    if(require(gage)){
+        data(kegg.gs)
+        lapply(kegg.gs[1:6],head)
+        head(rownames(fstats))
+        #feed fstats as single-column matrix into gage
+        gse16873.fstats.kegg.p <- gage(fstats, gsets = kegg.gs,
+                  ref = NULL, samp = NULL)
+        head(gse16873.fstats.kegg.p$greater)
+    }
+    }
 }
 
 ##for usage of the half datasets, check the help information for
