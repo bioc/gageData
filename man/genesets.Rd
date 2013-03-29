@@ -1,14 +1,23 @@
 \name{genesets}
 \Rdversion{1.1}
-\alias{kegg.gs}
-\alias{go.gs}
-\alias{carta.gs}
-\alias{kegg.mm}
-\alias{go.mm}
-\alias{kegg.rn}
-\alias{go.rn}
-\alias{kegg.sc}
-\alias{go.sc}
+\alias{kegg.sets.hs}
+\alias{go.sets.hs}
+\alias{carta.hs}
+\alias{kegg.sets.mm}
+\alias{go.sets.mm}
+\alias{kegg.sets.rn}
+\alias{go.sets.rn}
+\alias{kegg.sets.sc}
+\alias{go.sets.sc}
+
+\alias{sigmet.idx.hs}
+\alias{go.subs.hs}
+\alias{sigmet.idx.mm}
+\alias{go.subs.mm}
+\alias{sigmet.idx.rn}
+\alias{go.subs.rn}
+\alias{sigmet.idx.sc}
+\alias{go.subs.sc}
 
 \docType{data}
 \title{
@@ -19,28 +28,49 @@
   and BioCarta databases.
 }
 \usage{
-data(kegg.gs)
-data(go.gs)
-data(carta.gs)
-data(kegg.mm)
-data(go.mm)
-data(kegg.rn)
-data(go.rn)
-data(kegg.sc)
-data(go.sc)
+data(kegg.sets.hs)
+data(go.sets.hs)
+data(carta.hs)
+data(kegg.sets.mm)
+data(go.sets.mm)
+data(kegg.sets.rn)
+data(go.sets.rn)
+data(kegg.sets.sc)
+data(go.sets.sc)
+
+data(sigmet.idx.hs)
+data(go.subs.hs)
+data(sigmet.idx.mm)
+data(go.subs.mm)
+data(sigmet.idx.rn)
+data(go.subs.rn)
+data(sigmet.idx.sc)
+data(go.subs.sc)
 }
 \format{
- kegg.gs is a named list of 205 elements. Each element is a character
+ kegg.sets.hs is a named list of 229 elements. Each element is a character
  vector of member gene Entrez IDs for a single KEGG pathway. Type
- \code{head(kegg.gs, 3)} for the first 3 gene sets or pathways.
+ \code{head(kegg.sets.hs, 3)} for the first 3 gene sets or pathways.
 
- go.gs is a named list of ~10000 elements. Each element is a character
+ go.sets.hs is a named list of 17202 elements. Each element is a character
  vector of member gene Entrez IDs for a single Gene Ontology term. Type
- \code{head(go.gs, 3)} for the first 3 gene sets or GO terms.
+ \code{head(go.sets.hs, 3)} for the first 3 gene sets or GO terms.
 
- carta.gs is a named list of 259 elements. Each element is a character
+ sigmet.idx.hs is a index numbers of sinaling and metabolic pathways in
+ kegg.set.gs. In other words, KEGG pathway include other types of
+ pathway definitions, like "Global Map" and "Human Diseases", which are
+ frequently undesirable in pathway analysis. Therefore,
+ \code{kegg.sets.hs[sigmet.idx.hs]} gives you the "cleaner" gene sets of
+ sinaling and metabolic pathways only.
+
+ go.subs.hs is a named list of three elements: "BP", "CC" and "MF",
+ corresponding to biological process, cellular component and molecular
+ function subtrees. It may be more desirable to conduct separated GO
+ enrichment test on each of these 3 subtrees as shown in the example code.
+
+carta.hs is a named list of 259 elements. Each element is a character
  vector of member gene Entrez IDs for a single BioCarta pathway. Type
- \code{head(carta.gs, 3)} for the first 3 gene sets or pathways.
+ \code{head(carta.hs, 3)} for the first 3 gene sets or pathways.
 
  These are just KEGG, GO and BioCarta gene sets for the default species,
  i.e. human. KEGG or GO geen sets for other species including mouse (.mm), rat (.rn)
@@ -49,7 +79,7 @@ data(go.sc)
 \details{
 The human gene set data were compiled using Entrez Gene IDs, gene set names
 and mapping information from multiple Bioconductor packages, including:
-org.Hs.eg.db, kegg.db, go.db and cMAP. Please check the corresponding
+org.Hs.eg.db, KEGG.db, GO.db and cMAP. Please check the corresponding
 packages for more information.
 
 Gene set for other 3 species included here, was built similarly. The
@@ -59,7 +89,7 @@ GSEABase.
 }
 \source{
   Human data come from multiple Bioconductor packages, including: org.Hs.eg.db,
-  kegg.db, go.db and cMAP.
+  KEGG.db, GO.db and cMAP.
 }
 \references{
   Entrez Gene <URL: http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=gene>
@@ -76,15 +106,26 @@ cn=colnames(gse16873)
 hn=grep('HN',cn, ignore.case =TRUE)
 dcis=grep('DCIS',cn, ignore.case =TRUE)
 
-data(kegg.gs)
+data(kegg.sets.hs)
+data(sigmet.idx.hs)
+kegg.sigmet.hs=kegg.sets.hs[sigmet.idx.hs]
 
 #make sure the gene IDs are the same for expression data and gene set
 #data
-lapply(kegg.gs[1:3],head)
+lapply(kegg.sets.hs[1:3],head)
 head(rownames(gse16873))
 
-#GAGE analysis
-gse16873.kegg.p <- gage(gse16873, gsets = kegg.gs,
+#GAGE analysis with signaling and metabolic pathways
+gse16873.kegg.sets.p <- gage(gse16873, gsets = kegg.sigmet.hs,
+    ref = hn[1:3], samp = dcis[1:3])
+
+data(go.sets.hs)
+data(go.subs.hs)
+names(go.subs.hs)
+go.mf.hs=go.sets.hs[go.subs.hs$MF]
+
+#GAGE analysis with GO Molecular Function gene sets
+gse16873.kegg.sets.p <- gage(gse16873, gsets = go.mf.hs,
     ref = hn[1:3], samp = dcis[1:3])
 }
 }

@@ -1,0 +1,12 @@
+version 2.0.0
+
+  o update KEGG and GO gene sets to the latest definitions. Changed the
+    gene set data object names from kegg.xx to kegg.sets.xx, and from
+    go.xx to go.sets.xx.
+
+  o add subsetting indices kegg.sigmet.xx and go.subs.xx for more
+    refined gene set or pathway analysis.
+
+  o add gse16873.affyid, which is similar to gse16873 in gage package,
+    except that row IDs are Affymetrix probe set IDs instead of Entrez
+    Gene IDs.

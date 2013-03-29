@@ -2,6 +2,7 @@
 \Rdversion{1.1}
 \alias{gse16873.full}
 \alias{gse16873.2}
+\alias{gse16873.affyid}
 \docType{data}
 \title{
 GSE16873: a breast cancer microarray dataset
@@ -15,12 +16,19 @@ twelve patient cases, each with HN (histologically
  samples interesting to us plus 4 others less interesting in the full
  dataset, gse16873.full. Dataset gse16873 in gage and gse16873.2 in this
  package are half datasets each with only HN and DCIS samples of 6
- patients. Details section below gives more information.
+ patients. Dataset gse16873.affyid is similar to gse16873 in gage
+ package, except that row IDs are Affymetrix probe set IDs instead of
+ Entrez Gene IDs. This is becuase Affymetrix original CDF (hgu133a)
+ instead of Entrez Gene based on CDF was used when
+ processing the raw data.
+
+ Details section below gives more information on the datasets.
 }
 
 \usage{
 data(gse16873.full)
 data(gse16873.2)
+data(gse16873.affyid)
 }
 \details{
  Due to the size limit of the software package gage, we split
@@ -85,5 +93,33 @@ if (require(genefilter)){
 
 ##for usage of the half datasets, check the help information for
 ##heter.gage function in the gage package.
+
+#use of gse16873.affyid
+\dontrun{
+if(require(hgu133a.db) & require(gage)){
+egids2 <- hgu133aENTREZID[affyid]
+annots=toTable(egids2)
+str(annots)
+
+gse16873.affyid=gse16873.affyid[annots$probe_id,]
+#if multiple probe sets map to a gene, select the one with maximal IQR
+iqrs=apply(gse16873.affyid, 1, IQR)
+sel.rn=tapply(1:nrow(annots), annots$gene_id, function(x){
+x[which.max(iqrs[x])]
+})
+gse16873.egid=gse16873.affyid[sel.rn,]
+rownames(gse16873.egid)=names(sel.rn)
+
+library(gage)
+data(gse16873)
+cn=colnames(gse16873.egid)
+hn=grep('HN',cn, ignore.case =T)
+dcis=grep('DCIS',cn, ignore.case =T)
+data(kegg.gs)
+gse16873.kegg.p.affy <- gage(gse16873.egid, gsets = kegg.gs,
+    ref = hn, samp = dcis)
+#result should be similar to that of using gse16873
+}
+}
 }
 \keyword{datasets}
