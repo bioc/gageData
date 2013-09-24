@@ -9,6 +9,7 @@
 \alias{go.sets.rn}
 \alias{kegg.sets.sc}
 \alias{go.sets.sc}
+\alias{kegg.sets.ko}
 
 \alias{sigmet.idx.hs}
 \alias{go.subs.hs}
@@ -18,6 +19,7 @@
 \alias{go.subs.rn}
 \alias{sigmet.idx.sc}
 \alias{go.subs.sc}
+\alias{sigmet.idx.ko}
 
 \docType{data}
 \title{
@@ -74,7 +76,10 @@ carta.hs is a named list of 259 elements. Each element is a character
 
  These are just KEGG, GO and BioCarta gene sets for the default species,
  i.e. human. KEGG or GO geen sets for other species including mouse (.mm), rat (.rn)
- and yeast (.sc) have similar structure as their counterparts for human.
+ and yeast (.sc) have similar structure as their counterparts for
+ human. In addition to the individual species, KEGG gene sets for KEGG
+ Orthology (.ko) is also provided. This is useful for metagenomics,
+ microbiome and non-KEGG species data analysis.
 }
 \details{
 The human gene set data were compiled using Entrez Gene IDs, gene set names

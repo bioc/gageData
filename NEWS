@@ -1,3 +1,10 @@
+version 2.0.2
+
+  o add hnrnp.cnts as an demo RNA-seq data for GAGE analysis.
+
+  o add gene set data derived from KEGG Orthology as kegg.sets.ko and
+    sigmet.idx.ko.
+
 version 2.0.0
 
   o update KEGG and GO gene sets to the latest definitions. Changed the

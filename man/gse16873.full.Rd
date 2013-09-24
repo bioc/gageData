@@ -97,6 +97,8 @@ if (require(genefilter)){
 #use of gse16873.affyid
 \dontrun{
 if(require(hgu133a.db) & require(gage)){
+data(gse16873.affyid)
+affyid=rownames(gse16873.affyid)
 egids2 <- hgu133aENTREZID[affyid]
 annots=toTable(egids2)
 str(annots)
@@ -110,8 +112,6 @@ x[which.max(iqrs[x])]
 gse16873.egid=gse16873.affyid[sel.rn,]
 rownames(gse16873.egid)=names(sel.rn)
 
-library(gage)
-data(gse16873)
 cn=colnames(gse16873.egid)
 hn=grep('HN',cn, ignore.case =T)
 dcis=grep('DCIS',cn, ignore.case =T)
