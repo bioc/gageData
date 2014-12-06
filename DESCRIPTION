@@ -1,12 +1,12 @@
 Package: gageData
 Type: Package
 Title: Auxillary data for gage package
-Version: 2.5.0
+Version: 2.5.1
 Date: 2013-9-24
 Author: Weijun Luo
 Maintainer: Weijun Luo <luo_weijun@yahoo.com>
 Description: This is a supportive data package for the software package, gage. However, the data supplied here are also useful for gene set or pathway analysis or microarray data analysis in general. In this package, we provide two demo microarray dataset: GSE16873 (a breast cancer dataset from GEO) and BMP6 (originally published as an demo dataset for GAGE, also registered as GSE13604 in GEO). This package also includes commonly used gene set data based on KEGG pathways and GO terms for major research species, including human, mouse, rat and budding yeast. Mapping data between common gene IDs for budding yeast are also included.
-biocViews: ExperimentData, Cancer
+biocViews: ExperimentData, StemCell, CancerData, BreastCancerData, MicroarrayData, GEO
 Suggests: gage, pathview, genefilter
 License: GPL (>=2.0)
 LazyLoad: yes
