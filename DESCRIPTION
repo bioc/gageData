@@ -1,7 +1,7 @@
 Package: gageData
 Type: Package
 Title: Auxillary data for gage package
-Version: 2.34.0
+Version: 2.35.0
 Date: 2013-9-24
 Author: Weijun Luo
 Maintainer: Weijun Luo <luo_weijun@yahoo.com>
